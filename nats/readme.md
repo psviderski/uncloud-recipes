@@ -18,7 +18,7 @@ uc volume create jetstream_data -m machine3
 
 ## Host access
 
-The default compose.yaml maps the client and http ports to the host's **localhost** only (127.0.0.1, specifically).
+In addition to the internal network, for convenience, the default compose.yaml _also_ maps the client and http ports to the host's **localhost** only (127.0.0.1, specifically).
 ```
     # disable these ports mappings if access from the host is not needed
     x-ports:
