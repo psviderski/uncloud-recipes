@@ -16,6 +16,23 @@ uc volume create jetstream_data -m machine2
 uc volume create jetstream_data -m machine3
 ```
 
+## Usage
+
+Connect to any node:
+```python
+import nats
+nc = await nats.connect("nats://nats.internal:4222")
+```
+
+Or if on a machine with a NATS node, you can specify it specifically:
+```python
+import os
+import nats
+nc = await nats.connect(f"{os.environ['UNCLOUD_MACHINE_ID']}.m.nats.internal:4222")
+```
+
+_Note: After [#154](https://github.com/psviderski/uncloud/issues/154) is implemented, the first form (`"nats://nats.internal:4222"`) would automatically use the machine-local nats node._
+
 ## Host access
 
 In addition to the internal network, for convenience, the default compose.yaml _also_ maps the client and http ports to the host's **localhost** only (127.0.0.1, specifically).

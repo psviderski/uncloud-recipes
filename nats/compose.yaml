@@ -1,9 +1,17 @@
 services:
   nats:
     image: nats:2.12-alpine
-    restart: unless-stopped
+
+    # this will deploy one instance on each machine (with a jetstream_data volume)
     deploy:
       mode: global
+
+    # alternatively, you could deploy to a specific set of machines instead of using global mode:
+    # deploy:
+    #   mode: replicated
+    #   replicas: 1
+    # x-machines: [ "machine1", "machine2" ]
+
     volumes:
       - jetstream_data:/data/jetstream
     configs:
