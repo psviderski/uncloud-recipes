@@ -1,0 +1,31 @@
+services:
+  nats:
+    image: nats:2.12-alpine
+
+    # this will deploy one instance on each machine (with a jetstream_data volume)
+    deploy:
+      mode: global
+
+    # alternatively, you could deploy to a specific set of machines instead of using global mode:
+    # deploy:
+    #   mode: replicated
+    #   replicas: 1
+    # x-machines: [ "machine1", "machine2" ]
+
+    volumes:
+      - jetstream_data:/data/jetstream
+    configs:
+      - source: nats_server_config
+        target: /etc/nats/nats-server.conf
+
+    # disable these ports mappings if access from the host is not needed
+    x-ports:
+      - 127.0.0.1:4222:4222@host
+      - 127.0.0.1:8222:8222@host
+
+volumes:
+  jetstream_data:
+
+configs:
+  nats_server_config:
+    file: ./nats-server.conf
