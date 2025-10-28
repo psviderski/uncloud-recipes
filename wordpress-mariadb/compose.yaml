@@ -1,0 +1,32 @@
+# This Compose-like file sets up a WordPress site with a MariaDB database using Uncloud.
+services:
+  mariadb:
+    image: mariadb:12
+    environment:
+      # Environment variables will be read from .env file
+      MARIADB_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      MARIADB_DATABASE: ${DB_NAME}
+      MARIADB_USER: ${DB_USER}
+      MARIADB_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - db_data:/var/lib/mysql
+
+  wordpress:
+    image: wordpress:6.8
+    depends_on:
+      - mariadb
+    # TLS certificate will be automatically managed by Uncloud
+    x-ports:
+      - ${WP_DOMAIN}:80/https
+    environment:
+      WORDPRESS_DB_HOST: mariadb:3306
+      WORDPRESS_DB_USER: ${DB_USER}
+      WORDPRESS_DB_PASSWORD: ${DB_PASSWORD}
+      WORDPRESS_DB_NAME: ${DB_NAME}
+    volumes:
+      - wordpress_data:/var/www/html
+
+volumes:
+  # The volumes will be created by Uncloud as part of "uc deploy"
+  db_data:
+  wordpress_data:
