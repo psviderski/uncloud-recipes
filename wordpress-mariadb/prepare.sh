@@ -17,8 +17,8 @@ DB_USER="wordpress"
 DB_NAME="wordpress"
 
 # Generate secure random passwords (32 characters each)
-DB_PASSWORD=$(tr -dc 'A-Za-z0-9' < /dev/urandom | head -c 32)
-DB_ROOT_PASSWORD=$(tr -dc 'A-Za-z0-9' < /dev/urandom | head -c 32)
+DB_PASSWORD=$(LC_ALL=C tr -dc 'A-Za-z0-9' < /dev/urandom | head -c 32)
+DB_ROOT_PASSWORD=$(LC_ALL=C tr -dc 'A-Za-z0-9' < /dev/urandom | head -c 32)
 
 # Create .env file
 echo "Writing values to .env file..."
