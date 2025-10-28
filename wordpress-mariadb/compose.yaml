@@ -9,7 +9,7 @@ services:
       MARIADB_USER: ${DB_USER}
       MARIADB_PASSWORD: ${DB_PASSWORD}
     volumes:
-      - db_data:/var/lib/mysql
+      - mariadb_data:/var/lib/mysql
 
   wordpress:
     image: wordpress:6.8
@@ -28,5 +28,5 @@ services:
 
 volumes:
   # The volumes will be created by Uncloud as part of "uc deploy"
-  db_data:
+  mariadb_data:
   wordpress_data:

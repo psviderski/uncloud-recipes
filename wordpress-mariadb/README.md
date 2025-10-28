@@ -27,7 +27,7 @@ uc deploy
 
 Uncloud will automatically:
 
-- Create the required volumes (`db_data` and `wordpress_data`)
+- Create the required volumes (`mariadb_data` and `wordpress_data`)
 - Set up the services (MariaDB and WordPress)
 - Configure TLS certificates for your domain (via Caddy)
 - Start the containers
@@ -51,7 +51,7 @@ https://your-domain.com/wp-admin
 WordPress and database data are stored in named volumes on the machines of the Uncloud cluster:
 
 - `wordpress_data`: Contains WordPress installation files, themes, plugins, and uploads
-- `db_data`: Contains MariaDB database files
+- `mariadb_data`: Contains MariaDB database files
 
 These volumes persist across container restarts and redeployments. To back up your site, you can export these volumes or use WordPress backup plugins.
 
@@ -60,7 +60,7 @@ These volumes persist across container restarts and redeployments. To back up yo
 If you need to completely reset the installation:
 
 1. Remove the deployment: `uc service rm wordpress mariadb`
-2. Delete the volumes: `uc volume rm db_data wordpress_data`
+2. Delete the volumes: `uc volume rm mariadb_data wordpress_data`
 3. Re-run `./prepare.sh` (optional: use a new domain or keep the same)
 4. Deploy again: `uc deploy`
 
