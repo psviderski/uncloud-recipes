@@ -22,6 +22,7 @@ DB_ROOT_PASSWORD=$(LC_ALL=C tr -dc 'A-Za-z0-9' < /dev/urandom | head -c 32)
 
 # Create .env file
 echo "Writing values to .env file..."
+umask 077
 cat > .env << EOF
 # Database Configuration
 export DB_USER=${DB_USER}
