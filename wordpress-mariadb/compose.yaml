@@ -1,4 +1,4 @@
-# This Compose-lie file sets up a WordPress site with a MariaDB database using Uncloud.
+# This Compose-like file sets up a WordPress site with a MariaDB database using Uncloud.
 services:
   mariadb:
     image: mariadb:12
