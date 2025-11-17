@@ -4,7 +4,7 @@ export function startSocatProxy(): Bun.Subprocess {
   const socatProcess = Bun.spawn({
     cmd: [
       'socat',
-      // listen on loclhost 50051
+      // listen on localhost 50051
       'tcp-listen:50051,fork,reuseaddr',
       // forward to uncloud unix socket
       'unix-connect:/run/uncloud/uncloud.sock'
