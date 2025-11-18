@@ -1,0 +1,18 @@
+services:
+  uncloud-web-ui:
+    build:
+      context: .
+      platforms:
+        - "linux/amd64"
+
+    deploy:
+      mode: replicated
+      replicas: 1
+    # x-machines: [ "machine-a" ]
+
+    x-ports:
+      - 127.0.0.1:8998:8080@host
+      # todo: public interface
+
+    volumes:
+      - /run/uncloud/uncloud.sock:/run/uncloud/uncloud.sock

@@ -1,0 +1,8 @@
+{
+  "name": "uncloud-web-ui",
+  "module": "index.ts",
+  "type": "module",
+  "scripts": {
+    "dev": "bun --watch index.ts"
+  }
+}
