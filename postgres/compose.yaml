@@ -1,0 +1,19 @@
+services:
+  postgres:
+    image: postgres:18-alpine
+
+    deploy:
+      replicas: 1
+    # x-machines: [ "db-primary" ]
+
+    env_file: .env
+
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+    # Expose port to host for local access
+    x-ports:
+      - 127.0.0.1:5432:5432@host
+
+volumes:
+  postgres_data:
