@@ -2,6 +2,5 @@
 contexts:
   host-cluster:
     connections:
-      # Connect to the socat map of the mounted unix socket (see socat-proxy.ts)
-      - tcp: 127.0.0.1:50051
+      - unix: /run/uncloud/uncloud.sock
 current_context: host-cluster

@@ -1,7 +1,4 @@
-import { startSocatProxy } from './socat-proxy';
 import { runUcCommand } from './uc-runner';
-
-startSocatProxy();
 
 const server = Bun.serve({
   port: 8080,
