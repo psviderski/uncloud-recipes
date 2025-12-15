@@ -4,7 +4,7 @@ WORKDIR /app
 FROM base AS builder
 
 # Uncloud CLI version and architecture.
-ARG UNCLOUD_VERSION=v0.14.0
+ARG UNCLOUD_VERSION=v0.15.0
 ARG TARGETARCH=amd64
 
 # Download uncloud cli binary
@@ -17,9 +17,6 @@ RUN bun install
 
 FROM base AS final
 
-# Install socat
-RUN apt-get update && apt-get install -y socat && rm -rf /var/lib/apt/lists/*
-
 # Create directory for and copy uncloud config
 RUN mkdir -p /root/.config/uncloud
 COPY uncloud-config.yaml /root/.config/uncloud/config.yaml
@@ -31,7 +28,6 @@ COPY --from=builder /app/node_modules /app/node_modules
 # Copy the application source code last
 COPY package.json .
 COPY index.ts .
-COPY socat-proxy.ts .
 COPY uc-runner.ts .
 
 EXPOSE 8080
