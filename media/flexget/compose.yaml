@@ -1,0 +1,18 @@
+services:
+  flexget-flexget:
+    image: ghcr.io/flexget/flexget
+    container_name: flexget
+    command:
+      - daemon
+      - start
+      - --autoreload-config         # optional
+    entrypoint: /config/entrypoint.sh
+    x-ports:
+      - flexget.YOURDOMAIN.COM:5050/https
+    environment:
+      - TZ: ETC/UTC              # optional: defaults to UTC
+    volumes:
+      - /shared/flexget/config:/config        # required
+      - /shared/flexget/downloads:/downloads
+    x-machines:
+      - YOURHOST(S)
