@@ -44,8 +44,6 @@ services:
       - movies:/movies
       - bdrip:/moviedownloads
 
-#    ports:
-#      - "7878:7878"
     x-ports:
       - radarr.YOURDOMAIN.COM:7878/https
     x-machines:
