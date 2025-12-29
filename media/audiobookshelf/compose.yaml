@@ -1,0 +1,34 @@
+services:
+  audiobookshelf-audiobookshelf:
+    image: advplyr/audiobookshelf:latest
+    container_name: audiobookshelf
+    x-ports:
+      - audiobookshelf.YOURDOMAIN.COM:80/https
+    x-machines:
+      - YOURHOST(S)
+    volumes:
+      - audiob-audio:/audiobooks:ro
+      - /shared/audiobookshelf/audiobookshelf/metadata:/metadata
+      - /shared/audiobookshelf/audiobookshelf/config:/config
+      - audiob-ebooks:/ebooks:ro
+      - audiob-podcasts:/podcasts
+
+volumes:
+  audiob-audio:
+    driver: local
+    driver_opts:
+      type: "nfs"
+      o: "addr=YOURIP,nolock,soft"
+      device: ":/NFSSERVERPATH"
+  audiob-ebook:
+    driver: local
+    driver_opts:
+      type: "nfs"
+      o: "addr=YOURIP,nolock,soft"
+      device: ":/NFSSERVERPATH"
+  audiob-podcasts:
+    driver: local
+    driver_opts:
+      type: "nfs"
+      o: "addr=YOURIP,nolock,soft"
+      device: ":/NFSSERVERPATH"
