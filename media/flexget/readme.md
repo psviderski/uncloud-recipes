@@ -1,7 +1,7 @@
 # a simple Flexget deploy
 
 This deploys a single instance of https://flexget.com/
-It uses a combination of local directories (for configuration mostly. In my personal setup these are on a cephfs drive that all unclone vms have access to). You can adjust these to whatever you want.
+It uses a combination of local directories (for configuration mostly. In my personal setup these are on a cephfs drive that all uncloud vms have access to). You can adjust these to whatever you want.
 
 
 # how to deploy
