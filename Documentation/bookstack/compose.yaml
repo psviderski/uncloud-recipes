@@ -1,0 +1,38 @@
+services:
+  bookstack-bookstack:
+    image: lscr.io/linuxserver/bookstack
+    container_name: bookstack
+    environment:
+      - PUID=1000
+      - PGID=100
+      - APP_URL=https://bookstack.YOURDOMAIN.COM
+      - DB_HOST=bookstack-db
+      - DB_PORT=3306
+      - DB_USERNAME=bookstack
+      - DB_PASSWORD=SUPERSTRONGPASSWORD
+      - DB_DATABASE=bookstackapp
+#docker run -it --rm --entrypoint /bin/bash lscr.io/linuxserver/bookstack:latest appkey
+      - APP_KEY=RUNCOMMENTEDOUTCOMMANDABOVETOGENERATETHIS
+    volumes:
+      - /shared/bookstack/config:/config
+    x-ports:
+      - bookstack.YOURDOMAIN.COM:80/https
+    x-machines:
+      - YOURHOST(S)
+    depends_on:
+      - bookstack-db
+  bookstack-db:
+    image: mariadb
+    container_name: bookstack-db
+    environment:
+      - PUID=1000
+      - PGID=100
+      - MYSQL_ROOT_PASSWORD=SUPERSTRONGPASSWORD2
+      - TZ=Etc/ETC
+      - MYSQL_DATABASE=bookstackapp
+      - MYSQL_USER=bookstack
+      - MYSQL_PASSWORD=SUPERSTRONGPASSWORD
+    volumes:
+      - /shared/bookstack/data:/var/lib/mysql
+    x-machines:
+      - YOURHOST(S)

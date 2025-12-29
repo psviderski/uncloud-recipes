@@ -1,0 +1,61 @@
+global_defs {
+disable_script_security
+script_user root
+}
+
+vrrp_script check_unifi {
+    script "/keepalived/checkunifi.sh"
+    interval 2
+    weight 2
+    user root
+}
+vrrp_script check_syncthing {
+    script "/keepalived/checksyncthing.sh"
+    interval 2
+    weight 2
+    user root
+}
+
+vrrp_instance VI_1 {
+    state BACKUP
+    interface eth0
+    virtual_router_id 51
+    priority 110
+    advert_int 1
+    authentication {
+        auth_type PASS
+        auth_pass SUPERSTRONGPASS
+    }
+    unicast_peer {
+    IP2
+    IP3
+    }
+    virtual_ipaddress {
+        VIP1
+    }
+    track_script {
+        check_unifi
+    }
+}
+
+vrrp_instance VI_2 {
+    state MASTER
+    interface eth0
+    virtual_router_id 52
+    priority 120
+    advert_int 1
+    authentication {
+        auth_type PASS
+        auth_pass SUPERSTRONGPASS2
+    }
+    unicast_peer {
+    IP2
+    IP3
+    }
+    virtual_ipaddress {
+        VIP2
+    }
+    track_script {
+        check_syncthing
+    }
+}
