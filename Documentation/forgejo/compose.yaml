@@ -1,0 +1,38 @@
+services:
+  forgejo-web:
+    image: codeberg.org/forgejo/forgejo:13
+    container_name: forgejo
+    environment:
+      - USER_UID=1000
+      - USER_GID=1000
+      - FORGEJO__database__DB_TYPE=mysql
+      - FORGEJO__database__HOST=forgejo-db:3306
+      - FORGEJO__database__NAME=gitea
+      - FORGEJO__database__USER=gitea
+      - FORGEJO__database__PASSWD=SUPERSTRONGPASSWORD!
+    volumes:
+      - /shared/forgejo/gitea:/data
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+    x-ports:
+      - forgejo.YOURDOMAIN.COM:3000/https
+      - 23:22/tcp@host
+    x-machines:
+      - YOURHOST(S)
+    depends_on:
+      - forgejo-db
+
+  forgejo-db:
+    image: mariadb:12
+    container_name: forgejo-db
+    environment:
+      - MYSQL_ROOT_PASSWORD=SUPERSTRONGPASSWORD2!
+      - MYSQL_DATABASE=gitea
+      - MYSQL_USER=gitea
+      - MYSQL_PASSWORD=SUPERSTRONGPASSWORD!
+#    command: --innodb_force_recovery=2
+    volumes:
+      - /shared/forgejo/db2:/var/lib/mysql
+      - /shared/forgejo/bup:/bup
+    x-machines:
+      - YOURHOST(S)
