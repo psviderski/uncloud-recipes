@@ -1,4 +1,4 @@
-# a simple qbitorrent deploy
+# a simple syncthing deploy
 
 This deploys a single instance of https://syncthing.net/
 It uses a combination of local directories (for configuration mostly. In my personal setup these are on a cephfs drive that all uncloud vms have access to) and nfs shares (for large data coming from my nas in my personal setup). You can adjust these to whatever you want.
