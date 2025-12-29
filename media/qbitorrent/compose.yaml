@@ -1,0 +1,29 @@
+services:
+  qbittorrent-qbittorrent:
+    container_name: qbittorrent
+    image: ghcr.io/hotio/qbittorrent
+    x-ports:
+      - qbittorrent.YOURDOMAIN.COM:8082/https
+    x-machines:
+      - YOURHOST(S)
+
+    environment:
+      PUID: PUID
+      PGID: PGID
+      UMASK: 002
+      TZ: Etc/UTC
+      WEBUI_PORTS: 8082/tcp,8082/udp
+
+    volumes:
+      - /shared/qbittorrent/qbittorrent:/config
+      - /shared/qbittorrent/qbt:/incomplete
+      - qbdl:/download
+
+volumes:
+
+  qbdl:
+    driver: local
+    driver_opts:
+      type: "nfs"
+      o: "addr=YOURIP,nolock,soft"
+      device: ":/NFSSERVERPATH"

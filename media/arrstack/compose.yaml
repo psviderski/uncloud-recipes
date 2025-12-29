@@ -1,0 +1,127 @@
+services:
+  arrstack-bazarr:
+    image: lscr.io/linuxserver/bazarr:latest
+    container_name: bazarr
+    environment:
+      - PUID: PUID
+      - PGID: PGID
+      - TZ=Etc/UTC
+    volumes:
+      - /shared/arrstack/bazarr:/config
+      - movies:/movies
+      - tvsonarr:/tv
+
+    x-ports:
+      - bazarr.YOURDOMAIN.COM:6767/https
+    x-machines:
+      - YOURNODE(S)
+  arrstack-lidarr:
+    container_name: lidarr
+    image: lscr.io/linuxserver/lidarr:develop
+    environment:
+      TZ: Etc/UTC
+      PUID: PUID
+      PGID: PGID
+    volumes:
+      - /shared/arrstack/lidarr:/config
+      - recyclebin:/recyclebin
+      - lidarrmusic:/music
+    x-ports:
+      - lidarr.YOURDOMAIN.COM:8686/https
+    x-machines:
+      - YOURNODE(S)
+  arrstack-radarr:
+    container_name: radarr
+    image: lscr.io/linuxserver/radarr:latest
+    environment:
+      TZ: Etc/UTC
+      PUID: PUID
+      PGID: PGID
+
+    volumes:
+      - /shared/arrstack/radarr:/config
+      - recyclebin:/recyclebin
+      - movies:/movies
+      - bdrip:/moviedownloads
+
+    x-ports:
+      - radarr.YOURDOMAIN.COM:7878/https
+    x-machines:
+      - YOURNODE(S)
+
+      
+  arrstack-sonarr:
+    container_name: sonarr
+    image: lscr.io/linuxserver/sonarr:latest
+    environment:
+      TZ: Etc/UTC
+      PUID=PUID
+      PGID: PGID
+
+    volumes:
+      - /shared/arrstack/sonarr:/config
+      - recyclebin:/recyclebin
+      - tvsonarr:/tv
+      - tvdl:/tvdownloads
+    x-ports:
+      - sonarr.YOURDOMAIN.COM:8989/https
+    x-machines:
+      - YOURNODE(S)
+
+  arrstack-prowlarr:
+    image: lscr.io/linuxserver/prowlarr:develop
+    container_name: prowlarr
+    environment:
+      - PUID: PUID
+      - PGID: PGID
+      - TZ=Etc/UTC
+    volumes:
+      - /shared/arrstack/prowlarr:/config
+    x-ports:
+      - prowlarr.YOURDOMAIN.COM:9696/https
+    x-machines:
+      - YOURNODE(S)
+volumes:
+  recyclebin:
+    driver: local
+    driver_opts:
+      type: "nfs"
+      o: "addr=YOURIP,nolock,soft"
+      device: ":NFSPATH/recyclebin"
+  lidarrmusic:
+    driver: local
+    driver_opts:
+      type: "nfs"
+      o: "addr=YOURIP,nolock,soft"
+      device: ":NFSPATH/music/lidarrmusic"
+
+  music:
+    driver: local
+    driver_opts:
+      type: "nfs"
+      o: "addr=YOURIP,nolock,soft"
+      device: ":NFSPATH/nzb/music"
+  movies:
+    driver: local
+    driver_opts:
+      type: "nfs"
+      o: "addr=YOURIP,nolock,soft"
+      device: ":NFSPATH/video/Movies"
+  bdrip:
+    driver: local
+    driver_opts:
+      type: "nfs"
+      o: "addr=YOURIP,nolock,soft"
+      device: ":NFSPATH/nzb/bdrip"
+  tvsonarr:
+    driver: local
+    driver_opts:
+      type: "nfs"
+      o: "addr=YOURIP,nolock,soft"
+      device: ":NFSPATH/video/tv"
+  tvdl:
+    driver: local
+    driver_opts:
+      type: "nfs"
+      o: "addr=YOURIP,nolock,soft"
+      device: ":NFSPATH/nzb/tv"

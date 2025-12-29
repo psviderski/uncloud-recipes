@@ -1,0 +1,38 @@
+services:
+  jellyfin-jellyfin:
+    container_name: jellyfin
+    image: jellyfin/jellyfin:latest
+    environment:
+    # uid.gid if it matters for your setup. if it doesn't matter comment it out.
+      user: 1000.100
+      TZ: Etc/UTC
+    volumes:
+      - jfMovies:/mnt/movies:ro
+      - jftv:/mnt/tv:ro
+# I store config locally because cephfs powersmy uncloud nodes keeping the data exposed to all ofthem the same. This could as easily be a docker volume or an nfs share
+      - /shared/jellyfin/jellyfin:/config
+#if you have hardware encoding/decoding you possibly need the line below or something like it. All the stuff in devices is to pass in my intel gpu
+      - /dev/dri:/dev/dri
+    devices:
+      - /dev/dri:/dev/dri
+      - /dev/dri/renderD128:/dev/dri/renderD128
+    x-ports:
+      - jellyfin.YOURDOMAIN.com:8096/https
+    x-machines:
+      - HOST(s) where deployment is allowed.
+
+#doesn't need to be nfs, my media is just shared out via nfs. You can put whatever you want here
+volumes:
+  jfMovies:
+    driver: local
+    driver_opts:
+      type: "nfs"
+      o: "addr=IPADDRESS,nolock,soft"
+      device: ":PATHONNFSSERVER"
+  jftv:
+    driver: local
+    driver_opts:
+      type: "nfs"
+      o: "addr=IPADDRESS,nolock,soft"
+      device: ":PATHONNFSSERVER"
+
