@@ -1,4 +1,4 @@
-# a simple qbitorrent deploy
+# a simple *arr stack deploy
 
 This deploys bazarr, lidarr, radarr, and sonarr
 It uses a combination of local directories (for configuration mostly. In my personal setup these are on a cephfs drive that all unclone vms have access to) and nfs shares (for large data comign from my nas in my personal setup). You can adjust these to whatever you want.
