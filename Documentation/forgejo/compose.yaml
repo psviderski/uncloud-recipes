@@ -30,7 +30,6 @@ services:
       - MYSQL_DATABASE=gitea
       - MYSQL_USER=gitea
       - MYSQL_PASSWORD=SUPERSTRONGPASSWORD!
-#    command: --innodb_force_recovery=2
     volumes:
       - /shared/forgejo/db2:/var/lib/mysql
       - /shared/forgejo/bup:/bup
