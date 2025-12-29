@@ -1,6 +1,6 @@
 # a simple lazylibrarian deploy
 
-This deploys a single instance of https://www.qbittorrent.org/
+This deploys a single instance of https://gitlab.com/LazyLibrarian/LazyLibrarian
 It uses a combination of local directories (for configuration mostly. In my personal setup these are on a cephfs drive that all uncloud vms have access to) and nfs shares (for large data coming from my nas in my personal setup). You can adjust these to whatever you want.
 
 
