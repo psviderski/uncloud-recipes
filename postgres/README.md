@@ -3,6 +3,7 @@
 This is just a basic, single instance setup for now.
 
 TODOs:
+
 - Backup service
 - Primary and secondary instances with replication
 - Add `postgresql.conf` config file
@@ -22,7 +23,8 @@ Host access is enabled on `127.0.0.1:5432`.
 ### Connecting via ssh port-forwarding
 
 Where `$machine`, `$dbuser`, and `$dbname` from your setup earlier:
-```
+
+```sh
 ssh -fN -L 5555:localhost:5432 $machine
 psql -h localhost -p 5555 -U $dbuser $dbname
 ```
