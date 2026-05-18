@@ -6,6 +6,7 @@ A community-maintained collection of [Compose](https://compose-spec.io/) configu
 
 - [**NATS cluster**](nats/) - Deploys a [NATS](https://nats.io/) cluster, with the optional JetStream persistence layer.
 - [**WordPress with MariaDB**](wordpress-mariadb/) - Complete WordPress site with MariaDB database backend.
+- [**External services**](external-services/) - Expose services running outside of uncloud (bare-metal hosts, BMC controllers, smart home hubs) via the managed Caddy reverse proxy.
 
 ## Contributing
 

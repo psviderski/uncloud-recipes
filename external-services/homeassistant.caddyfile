@@ -1,0 +1,9 @@
+# Reverse proxy for HomeAssistant running on a dedicated host (plain HTTP upstream).
+#
+# Replace:
+#   - homeassistant.example.com  with your domain
+#   - 192.168.1.x                with the IP of your HomeAssistant host
+
+homeassistant.example.com {
+  reverse_proxy 192.168.1.x:8123
+}

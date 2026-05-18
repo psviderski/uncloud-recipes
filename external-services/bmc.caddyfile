@@ -1,0 +1,18 @@
+# Reverse proxy for a BMC controller (e.g. TuringPi, iDRAC, iLO) that serves
+# HTTPS with a self-signed certificate.
+#
+# tls_insecure_skip_verify allows Caddy to connect to the BMC's self-signed
+# upstream while still presenting a valid certificate to the browser.
+#
+# Replace:
+#   - bmc.example.com  with your domain
+#   - 192.168.1.x      with the IP of your BMC controller
+
+bmc.example.com {
+  reverse_proxy https://192.168.1.x {
+    transport http {
+      tls_insecure_skip_verify
+    }
+  }
+  log
+}
