@@ -74,13 +74,12 @@ uc caddy config
 
 ## Alternative: stub service via x-caddy
 
-If you prefer to tie proxy configuration to the lifecycle of a `uc deploy` command rather than managing it separately, you can use the `x-caddy` compose extension on a stub service — a minimal container (e.g. `alpine` running `tail -f /dev/null`) that exists purely to inject a Caddyfile block:
+If you prefer to tie proxy configuration to the lifecycle of a `uc deploy` command rather than managing it separately, you can use the `x-caddy` compose extension on a stub service — a minimal container (e.g. `portainer/pause` running a no-op command) that exists purely to inject a Caddyfile block:
 
 ```yaml
 services:
   homeassistant-proxy:
-    image: alpine:latest
-    command: ["tail", "-f", "/dev/null"]
+    image: portainer/pause:latest
     x-caddy: |
       homeassistant.example.com {
         reverse_proxy 192.168.1.x:8123
