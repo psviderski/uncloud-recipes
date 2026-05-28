@@ -1,0 +1,36 @@
+---
+services:
+  lazylibrarian-lazylibrarian:
+    image: lscr.io/linuxserver/lazylibrarian:latest
+    container_name: lazylibrarian
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/ETC
+      - DOCKER_MODS=linuxserver/mods:universal-calibre|linuxserver/mods:lazylibrarian-ffmpeg #optional
+    volumes:
+      - /shared/lazylibrarian/data:/config
+      - lzdownloads:/downloads
+      - lzebooks:/ebooks
+      - lzaudio:/abooks
+    x-ports:
+      - lazy.YOURDOMAIN.COM:5299/https
+    restart: unless-stopped
+volumes:
+  lzdownloads:
+    driver: local
+    driver_opts:
+      o: "addr=YOURIP,nolock,soft"
+      device: ":/NFSSERVERPATH"
+  lzebooks:
+    driver: local
+    driver_opts:
+      o: "addr=YOURIP,nolock,soft"
+      device: ":/NFSSERVERPATH"
+  lzaudio:
+    driver: local
+    driver_opts:
+      o: "addr=YOURIP,nolock,soft"
+      device: ":/NFSSERVERPATH"
+
+

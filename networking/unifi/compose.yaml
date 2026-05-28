@@ -1,0 +1,50 @@
+services:
+  unifi-app:
+    image: lscr.io/linuxserver/unifi-network-application:latest
+    container_name: unifi-appp
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/UTC
+      - MONGO_USER=unifi
+      - MONGO_PASS=
+      - MONGO_HOST=unifi-db
+      - MONGO_PORT=27017
+      - MONGO_DBNAME=unifi
+      - MONGO_AUTHSOURCE=admin
+      - MEM_LIMIT=1024 #optional
+      - MEM_STARTUP=1024 #optional
+      - MONGO_TLS= #optional
+    volumes:
+      - /path/to/unifi-network-application/data:/config
+    x-ports:
+      - unifi.resider.net:8443/https
+      - 8443:8443/tcp@host
+      - 10001:10001/udp@host
+      - 3478:3478/udp@host
+      - 1900:1900/udp@host
+      - 8843:8843/tcp@host
+      - 8880:8880/tcp@host
+      - 5514:5514/udp@host
+      - 8080:8080/tcp@host
+    x-machines:
+      - YOURHOST(S)
+    depends_on:
+      - unifi-db
+
+
+  unifi-db:
+    image: docker.io/mongo:6.0
+    container_name: unifi-db
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=
+      - MONGO_USER=unifi
+      - MONGO_PASS=
+      - MONGO_DBNAME=unifi
+      - MONGO_AUTHSOURCE=admin
+    volumes:
+      - /path/to/data:/data/db
+      - /path/to/init-mongo.sh:/docker-entrypoint-initdb.d/init-mongo.sh:ro
+    x-machines:
+      - YOURHOST(S)

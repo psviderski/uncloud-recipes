@@ -1,0 +1,26 @@
+services:
+  syncthing-syncthing:
+    image: lscr.io/linuxserver/syncthing
+    container_name: syncthing
+    hostname: syncthing #optional
+    environment:
+      - PUID=1000
+      - PGID=100
+      - TZ=Etc/ETC
+    volumes:
+      - /shared/syncthing/syncthing:/config
+      - syncfiles:/myfiles
+
+    x-ports:
+      - syncthing.YOURDOMAIN.COM:8384/https
+      -  22000:22000/tcp@host
+      - 21027:21027/udp@host
+    x-machines:
+      - YOURHOST(S)
+volumes:
+  syncfiles:
+    driver: local
+    driver_opts:
+      type: "nfs"
+      o: "addr=YOURIP,nolock,soft"
+      device: ":/NFSSERVERPATH"

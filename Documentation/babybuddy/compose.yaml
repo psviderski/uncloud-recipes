@@ -1,0 +1,21 @@
+services:
+  babybuddy-babybuddy:
+    image: lscr.io/linuxserver/babybuddy:latest
+    container_name: babybuddy
+    environment:
+      - TZ=Etc/ETC
+      - ALLOWED_HOSTS=*
+      - CSRF_TRUSTED_ORIGINS=http://NODEIP:8000,https://babybuddy.YOURDOMAIN.COM,https://127.0.0.1:8000
+      - DEBUG=True
+      - DJANGO_SETTINGS_MODULE=babybuddy.settings.base
+      - SECRET_KEY=MEMASHKEYBOARDLONGTIME8wrewkfdsfjnadskfdsfn3281274r39ryhksdfdskhf,ds
+      - PUID=1000
+      - PGID=100
+
+    volumes:
+      - /shared/babybuddy/babybuddy:/config
+
+    x-ports:
+     - babybuddy.YOURDOMAIN.COM:8000/https
+    x-machines:
+      - YOURHOST(S)

@@ -1,0 +1,11 @@
+services:
+  memos:
+    image: ghcr.io/usememos/memos:latest
+    container_name: memos
+    volumes:
+      - /shared/memos/memos/:/var/opt/memos
+
+    x-ports:
+      - memos.YOURDOMAIN.COM:5230/https
+    x-machines:
+      - YOURHOST(S)

@@ -1,0 +1,30 @@
+services:
+
+   nzbget-nzbget:
+    container_name: nzbget
+    image: ghcr.io/nzbgetcom/nzbget:latest
+
+    environment:
+      PUID: 1000
+      PGID: 100
+      TZ: Etc/ETC
+      NZBGET_USER: YOURUSER
+      NZBGET_PASS: YOURPASS
+
+    volumes:
+      - /shared/nzbget/incomplete:/incomplete-downloads
+      - nzbdl:/downloads
+      - /shared/nzbget/config:/config
+
+    x-ports:
+      - nzbget.YOURDOMAIN.COM:6789/https
+    x-machines:
+      - YOURHOST(S)
+
+volumes:
+   nzbdl:
+    driver: local
+    driver_opts:
+      type: "nfs"
+      o: "addr=YOURIP,nolock,soft"
+      device: ":/NFSSERVERPATH"
